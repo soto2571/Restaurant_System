@@ -1,0 +1,8 @@
+<h1>Kitchen Dashboard</h1>
+<ul>
+  {% for order in orders %}
+    <li>
+      {{ order.item }} - {{ order.status }} - {{ order.account.customer_name }}
+    </li>
+  {% endfor %}
+</ul>

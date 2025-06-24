@@ -1,0 +1,8 @@
+<h1>Waiter Dashboard</h1>
+<ul>
+  {% for table in tables %}
+    <li>
+      <a href="{% url 'table_detail' table.id %}">Table {{ table.number }}</a>
+    </li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,14 @@
+<h1>Table {{ table.number }}</h1>
+<a href="{% url 'add_account' table.id %}">Add New Account</a>
+
+{% for account in table.accounts.all %}
+  <h2>Account: {{ account.customer_name }}</h2>
+  <a href="{% url 'add_order' account.id %}">Add Order</a>
+  <ul>
+    {% for order in account.orders.all %}
+      <li>{{ order.item }} - {{ order.status }}</li>
+    {% endfor %}
+  </ul>
+{% empty %}
+  <p>No accounts yet for this table.</p>
+{% endfor %}
