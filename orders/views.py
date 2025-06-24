@@ -1,18 +1,21 @@
 from django.shortcuts import render, redirect
 from .models import Table, Account, OrderNote
 from .forms import OrderNoteForm, AccountForm
+from django.contrib.auth.decorators import login_required
 
 """
 Views for the app to handle landing page, waiter dashboard, kitchen dashboard,
 """
-
+@login_required
 def landing_page(request):
     return render(request, 'orders/landing_page.html')
 
+@login_required
 def waiter_dashboard(request):
     tables = Table.objects.all()
     return render(request, 'orders/waiter_dashboard.html', {'tables': tables})
 
+@login_required
 def kitchen_dashboard(request):
     tables = Table.objects.prefetch_related('accounts__orders').all()
     return render(request, 'orders/kitchen_dashboard.html', {'tables': tables})
