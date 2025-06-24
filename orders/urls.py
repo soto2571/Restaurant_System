@@ -14,4 +14,5 @@ urlpatterns = [
     path('account/<int:account_id>/delete/', views.delete_account, name='delete_account'),
     path('table/<int:table_id>/clear/', views.clear_table, name='clear_table'),
     path('order/<int:order_id>/edit/', views.edit_order, name='edit_order'),
+    path('order/<int:order_id>/update-status/<str:status>/', views.update_order_status, name='update_order_status'),
 ]

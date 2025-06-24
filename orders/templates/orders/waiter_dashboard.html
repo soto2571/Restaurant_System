@@ -1,9 +1,19 @@
-<h1>Waiter Dashboard</h1>
-<ul>
-  {% for table in tables %}
-    <li>
-      <a href="{% url 'table_detail' table.id %}">Table {{ table.number }}</a>
-    </li>
-  {% endfor %}
-</ul>
-<a href="{% url 'kitchen_dashboard' %}">Kitchen Dashboard</a> <br>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Waiter Dashboard</title>
+</head>
+<body>
+  <h1>Waiter Dashboard</h1>
+
+  <ul>
+    {% for table in tables %}
+      <li>
+        <a href="{% url 'table_detail' table.id %}">Table {{ table.number }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'kitchen_dashboard' %}">Go to Kitchen Dashboard</a>
+</body>
+</html>

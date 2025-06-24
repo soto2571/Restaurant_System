@@ -14,9 +14,8 @@ def waiter_dashboard(request):
     return render(request, 'orders/waiter_dashboard.html', {'tables': tables})
 
 def kitchen_dashboard(request):
-    orders = OrderNote.objects.all().order_by('created_at')
-    return render(request, 'orders/kitchen_dashboard.html', {'orders': orders})
-
+    tables = Table.objects.prefetch_related('accounts__orders').all()
+    return render(request, 'orders/kitchen_dashboard.html', {'tables': tables})
 
 
 """
@@ -97,3 +96,10 @@ def edit_order(request, order_id):
     else:
         form = OrderNoteForm(instance=order)
     return render(request, 'orders/edit_order.html', {'form': form, 'order': order})
+
+def update_order_status(request, order_id, status):
+    order = OrderNote.objects.get(id=order_id)
+    if status in ['in_progress', 'completed']:
+        order.status = status
+        order.save()
+    return redirect('kitchen_dashboard')

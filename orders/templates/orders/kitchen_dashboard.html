@@ -1,9 +1,39 @@
-<h1>Kitchen Dashboard</h1>
-<ul>
-  {% for order in orders %}
-    <li>
-      {{ order.item }} - {{ order.status }} - {{ order.account.customer_name }}
-    </li>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kitchen Dashboard</title>
+  <meta http-equiv="refresh" content="15">
+</head>
+<body>
+  <h1>Kitchen Dashboard</h1>
+
+  {% for table in tables %}
+    <h2>Table {{ table.number }}</h2>
+
+    {% for account in table.accounts.all %}
+      <h3>Account: {{ account.customer_name }}</h3>
+
+      {% if account.orders.all %}
+        <ul>
+          {% for order in account.orders.all %}
+            <li>
+              <strong>{{ order.item }}</strong> — <em>{{ order.status }}</em>
+
+              {% if order.status == 'pending' %}
+                | <a href="{% url 'update_order_status' order.id 'in_progress' %}">Start</a>
+              {% elif order.status == 'in_progress' %}
+                | <a href="{% url 'update_order_status' order.id 'completed' %}">Complete</a>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No orders for this account.</p>
+      {% endif %}
+    {% endfor %}
   {% endfor %}
-</ul>
-<a href="{% url 'waiter_dashboard' %}">Back to Waiter Dashboard</a>
+
+  <hr>
+  <a href="{% url 'waiter_dashboard' %}">🔙 Back to Waiter Dashboard</a>
+</body>
+</html>

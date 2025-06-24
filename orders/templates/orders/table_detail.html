@@ -1,6 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Table {{ table.number }}</title>
+  <meta http-equiv="refresh" content="15">  <!-- Auto-refresh every 15 seconds -->
+</head>
+<body>
+
 <h1>Table {{ table.number }}</h1>
 <a href="{% url 'add_account' table.id %}">Add New Account</a>
-
 
 {% for account in table.accounts.all %}
   <h2>Account: {{ account.customer_name }}</h2>
@@ -13,9 +20,12 @@
       <a href="{% url 'edit_order' order.id %}">Edit</a>
     {% endfor %}
   </ul>
-  
 {% empty %}
   <p>No accounts yet for this table.</p>
 {% endfor %}
-<a href="{% url 'clear_table' table.id %}">🧹 Clear Table</a> <br>
+
+<a href="{% url 'clear_table' table.id %}">🧹 Clear Table</a><br>
 <a href="{% url 'waiter_dashboard' %}">Back to Waiter Dashboard</a>
+
+</body>
+</html>
