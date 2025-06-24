@@ -1,14 +1,21 @@
 <h1>Table {{ table.number }}</h1>
 <a href="{% url 'add_account' table.id %}">Add New Account</a>
 
+
 {% for account in table.accounts.all %}
   <h2>Account: {{ account.customer_name }}</h2>
   <a href="{% url 'add_order' account.id %}">Add Order</a>
+  <a href="{% url 'edit_account' account.id %}">Edit</a> |
+  <a href="{% url 'delete_account' account.id %}">Delete</a>
   <ul>
     {% for order in account.orders.all %}
       <li>{{ order.item }} - {{ order.status }}</li>
+      <a href="{% url 'edit_order' order.id %}">Edit</a>
     {% endfor %}
   </ul>
+  
 {% empty %}
   <p>No accounts yet for this table.</p>
 {% endfor %}
+<a href="{% url 'clear_table' table.id %}">🧹 Clear Table</a> <br>
+<a href="{% url 'waiter_dashboard' %}">Back to Waiter Dashboard</a>

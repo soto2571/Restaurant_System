@@ -55,3 +55,45 @@ def add_order(request, account_id):
     return render(request, 'orders/add_order.html', {'form': form, 'account': account})
 
 
+"""
+Views for editing and deleting accounts.
+"""
+def edit_account(request, account_id):
+    account = Account.objects.get(id=account_id)
+    if request.method == 'POST':
+        form = AccountForm(request.POST, instance=account)
+        if form.is_valid():
+            form.save()
+            return redirect('table_detail', table_id=account.table.id)
+    else:
+        form = AccountForm(instance=account)
+    return render(request, 'orders/edit_account.html', {'form': form, 'account': account})
+
+
+def delete_account(request, account_id):
+    account = Account.objects.get(id=account_id)
+    table_id = account.table.id
+    if request.method == 'POST':
+        account.delete()
+        return redirect('table_detail', table_id=table_id)
+    return render(request, 'orders/delete_account.html', {'account': account})
+
+
+def clear_table(request, table_id):
+    table = Table.objects.get(id=table_id)
+    if request.method == 'POST':
+        # Clear all accounts and orders for the table
+        table.accounts.all().delete()
+        return redirect('table_detail', table_id=table_id)
+    return render(request, 'orders/clear_table.html', {'table': table})
+
+def edit_order(request, order_id):
+    order = OrderNote.objects.get(id=order_id)
+    if request.method == 'POST':
+        form = OrderNoteForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('table_detail', table_id=order.account.table.id)
+    else:
+        form = OrderNoteForm(instance=order)
+    return render(request, 'orders/edit_order.html', {'form': form, 'order': order})

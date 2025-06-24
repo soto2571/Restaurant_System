@@ -1,0 +1,7 @@
+<h2>Edit Order</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save Changes</button>
+</form>
+<a href="{% url 'table_detail' order.account.table.id %}">Cancel</a>
